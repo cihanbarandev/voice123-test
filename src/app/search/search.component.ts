@@ -9,7 +9,7 @@ import { SearchService } from '../search.service';
 export class SearchComponent implements OnInit {
   users: any[];
   searchIsDone = false;
-  audio = 'https://v1-media.s3.amazonaws.com/';
+  searchValue = '';
 
   // pagination
   collectionSize: number;
@@ -21,20 +21,31 @@ export class SearchComponent implements OnInit {
   ngOnInit() {}
 
   handleInput($event) {
-    const searchValue = $event.target.value;
-    this.search(searchValue);
+    this.searchValue = $event.target.value;
+    this.search(this.searchValue);
   }
 
   handleButton($event: any, searchInput: HTMLInputElement) {
     $event.preventDefault();
 
-    const searchValue = searchInput.value;
-    this.search(searchValue);
+    this.searchValue = searchInput.value;
+    this.search(this.searchValue);
   }
 
   search(searchText: string) {
     this.searchService.searchUser(searchText).subscribe(results => {
-      this.users = results.providers;
+      this.users = results.providers.map(user => {
+        const pattern = /\n/;
+        let summary = 'No summary provided.';
+
+        if (user.summary) {
+          const firstParStartsAt = user.summary.search(pattern);
+          summary = user.summary.slice(0, firstParStartsAt);
+        }
+
+        return (user = { ...user, ...{ summary } });
+      });
+
       this.collectionSize = this.users.length;
       this.searchIsDone = true;
     });

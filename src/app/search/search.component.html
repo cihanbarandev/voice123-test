@@ -50,6 +50,7 @@
                   [routerLink]="['/users', u.user.username]"
                   >{{ u.user.name }}</a
                 >
+                <p>{{ u.summary }}</p>
                 <audio controls>
                   <source [src]="u.relevant_sample.file" type="audio/mpeg" />
                   Your browser does not support the audio element.

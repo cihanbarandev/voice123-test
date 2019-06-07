@@ -13,7 +13,6 @@ export class SearchService {
     'https://api.sandbox.voice123.com/providers/search/?service=voice_over&keywords=';
 
   searchUser(searchText: string) {
-    console.log(this.url + searchText);
     return this.httpClient.get(this.url + searchText) as Observable<
       SearchResult
     >;
