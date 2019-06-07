@@ -8,6 +8,8 @@ Run `npm install`
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+Note: I have used two dependencies; `bootstrap` as a css framework and `@ng-bootstrap/ng-bootstrap` to implement a the pagination.
+
 ## Worklog
 
 - Understand tasks, think about potential solutions, simplify them and create trello board for tracking. (52min)
