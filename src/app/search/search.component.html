@@ -1,0 +1,76 @@
+<h1>Voice Artist Search</h1>
+<form class="form-inline my-5">
+  <input
+    type="search"
+    class="form-control mr-sm-2 input-search"
+    aria-describedby="emailHelp"
+    placeholder="Search..."
+    #searchInput
+    (keyup.enter)="handleInput($event)"
+  />
+  <button
+    type="submit"
+    class="btn btn-primary my-2 my-sm-0"
+    (click)="handleButton($event, searchInput)"
+  >
+    Search
+  </button>
+</form>
+<div *ngIf="searchIsDone && users.length > 0">
+  <!-- search-results -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <ng-container
+          *ngFor="
+            let u of users
+              | slice: (page - 1) * pageSize:(page - 1) * pageSize + pageSize;
+            i as index
+          "
+        >
+          <div class="col-md-4">
+            <!-- user -->
+            <div class="card mb-3" style="width: 18rem;">
+              <img
+                *ngIf="u.user.picture_large; else noPicture"
+                class="card-img-top"
+                [src]="u.user.picture_large"
+                alt="{{ u.user.name }}"
+              />
+              <ng-template #noPicture>
+                <img
+                  class="card-img-top"
+                  src="https://via.placeholder.com/286"
+                  alt="no profile picture"
+                />
+              </ng-template>
+              <div class="card-body">
+                <a
+                  class="card-title d-block mb-3"
+                  [routerLink]="['/users', u.user.username]"
+                  >{{ u.user.name }}</a
+                >
+                <audio controls>
+                  <source [src]="u.relevant_sample.file" type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="(i + 1) % 3 === 0" class="w-100"></div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="searchIsDone && users.length === 0">
+  <h2>No result...</h2>
+</div>
+<ngb-pagination
+  class="d-flex justify-content-center mt-5"
+  *ngIf="searchIsDone && users.length !== 0"
+  [collectionSize]="collectionSize"
+  [pageSize]="pageSize"
+  [(page)]="page"
+  aria-label="Default pagination"
+></ngb-pagination>
