@@ -4,6 +4,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+Make sure you have `node, npm, angular-cli`
+
+To install angular-cli `npm install -g @angular/cli`
+
+Change directory `cd voice123-test`
+
 Run `npm install`
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
